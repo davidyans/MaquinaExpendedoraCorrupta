@@ -1,6 +1,6 @@
 class MaquinaExpendedora:
     def __init__(self):
-        self.estados = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10']
+        self.estados = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'e']
         self.alfabeto = ['5', '10', '25', '50', '.']
         self.matriz_transiciones = [
             ['q1',  'q2',  'q5',  'q10', '-'],
@@ -13,7 +13,8 @@ class MaquinaExpendedora:
             ['q8',  'q9',  'e',   'e',   '-'],
             ['q9',  'q10', 'e',   'e',   '-'],
             ['q10', 'e',   'e',   'e',   '-'],
-            ['e',   'e',   'e',   'e',   'tango']
+            ['e',   'e',   'e',   'e',   'tango'],
+            ['e',   'e',   'e',   'e',   '-']
         ]
         self.estado_inicial = 'q0'
         self.estados_aceptacion = ['q2', 'q5', 'q10']
@@ -22,7 +23,8 @@ class MaquinaExpendedora:
 
     def transicion(self, estado_actual, simbolo):
         columna = self.alfabeto.index(simbolo)
-        return self.matriz_transiciones[self.estados.index(estado_actual)][columna]
+        fila = self.estados.index(estado_actual)
+        return self.matriz_transiciones[10][0] if 'e' in self.matriz_transiciones[fila][columna] else self.matriz_transiciones[fila][columna]
     
     def procesar_monedas(self, monedas):
         if "." not in monedas:
