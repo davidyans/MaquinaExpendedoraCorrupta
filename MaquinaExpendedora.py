@@ -37,10 +37,10 @@ class MaquinaExpendedora:
             if moneda not in self.alfabeto:
                 return "Ingresó una moneda no valida"
             if "." in moneda and self.es_aceptacion(estado_actual):
-                return " - Producto: " + self.matriz_transiciones[self.estados.index(estado_actual)][4]
+                return self.compra_producto_exacta(estado_actual)
             
             if "." in moneda and not self.es_aceptacion(estado_actual):
-                return self.quedarse_con_cambio(estado_actual)
+                return self.compra_producto_quedarse_cambio(estado_actual)
             
             self.ganancia_i += float(moneda)
             estado_actual = self.transicion(estado_actual, moneda)
@@ -48,9 +48,13 @@ class MaquinaExpendedora:
     def es_aceptacion(self, estado_actual):
         return estado_actual in self.estados_aceptacion
     
-    def quedarse_con_cambio(self, estado_actual):
-        return " - Producto: " + self.encontrar_producto_adquirible(estado_actual) + "\n - Ganancia de la maquina en esta compra: " + str(self.ganancia_i) + "\n - Ganacia total de la maquina: " + str(self.ganancia_total)
+    def compra_producto_quedarse_cambio(self, estado_actual):
+        return " $ Producto devuelto: " + self.encontrar_producto_adquirible(estado_actual) + "\n $ Ganancia de la maquina en esta compra: " + str(self.ganancia_i) + " ctvs\n $ Ganacia total de la maquina: " + str(self.ganancia_total) + " ctvs"
+     
     
+    def compra_producto_exacta(self, estado_actual):
+        return " $ Producto devuelto: " + self.matriz_transiciones[self.estados.index(estado_actual)][4] + "\n $ Ganancia de la maquina en esta compra: " + str(self.ganancia_i) + " ctvs\n $ Ganacia total de la maquina: " + str(self.ganancia_total) + " ctvs"
+
     def encontrar_producto_adquirible(self, estado_actual):
         estados_aceptacion_reversa = self.estados_aceptacion[::-1]
         
